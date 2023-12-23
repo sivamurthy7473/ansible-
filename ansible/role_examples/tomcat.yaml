@@ -1,0 +1,5 @@
+- name: install tomact 
+  hosts: tomcat
+  become: yes 
+  roles: 
+    - tomcat10

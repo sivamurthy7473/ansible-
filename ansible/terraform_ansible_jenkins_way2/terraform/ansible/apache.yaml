@@ -1,0 +1,9 @@
+- name: apache2 automation
+  hosts: localhost
+  become: yes
+  tasks: 
+    - name: Install apache2 
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: yes
+        state: present

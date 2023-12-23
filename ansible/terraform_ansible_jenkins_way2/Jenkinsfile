@@ -1,0 +1,21 @@
+pipeline {
+  agent {
+    label 'ansible'
+  }
+  triggers {
+    pollSCM('* * * * *')
+  }
+  stages {
+    stage('git') {
+        steps {
+            git url: "https://github.com/sangamesh00/test2.git",
+                branch: "master"
+        }
+    }
+    stage('terraformway2') {
+       steps{
+        sh script: "cd terraform && terraform init && terraform apply -auto-approve"
+       }
+    }
+  }
+}

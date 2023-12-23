@@ -1,0 +1,29 @@
+pipeline {
+    agent {
+         label 'ansible' 
+        }
+    triggers{
+        pollSCM ('* * * * *')
+    }
+    stages {
+        stage('clone') {
+            steps {
+              git url: 'https://github.com/sangamesh00/test.git',
+              branch: 'master'
+            }
+        }
+
+        stage('terraformvirtualmachine'){
+             
+            steps {
+                
+                sh script: 'cd ansible/terraform && terraform init && terraform apply -auto-approve && sudo chmod 777 hosts && terraform output -raw apacheurl >> hosts'
+            }
+        }
+        stage('ansibledeploy'){
+            steps {
+                sh script: 'cd ansible && ansible-playbook  -i terraform/hosts ubuntu.yaml'
+            }
+        }
+  }
+}

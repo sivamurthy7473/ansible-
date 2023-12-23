@@ -1,0 +1,7 @@
+---
+- name: install phpinfo
+  become: yes
+  hosts: all
+  roles:
+    - infophp
+    
